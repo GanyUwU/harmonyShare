@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "794786710321",
+    "firebase_url": "https://final-harmo-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "final-harmo",
+    "storage_bucket": "final-harmo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794786710321:android:2fb1daa046fab38386e610",
+        "android_client_info": {
+          "package_name": "com.example.finals"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt0Kz9Zq3Ii2Lg6YKVRVn_hgN8ifJeE1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
