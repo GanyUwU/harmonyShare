@@ -26,38 +26,23 @@ class _ReqAcceptedState extends State<ReqAccepted> {
         padding: EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          /*  SizedBox(height: 20),
-            itemProfile('Pick up Location', '', Icons.location_pin),
-            SizedBox(height: 20),
-            itemProfile("Pick up Instructions", "ABCD", Icons.integration_instructions),
-            SizedBox(height: 20),
-            itemProfile("Food Items", "Biryani", Icons.email),
-            SizedBox(height: 20),
-            itemProfile("Food Quantity", "5 kg", Icons.location_pin),
-            SizedBox(height: 20),
-            itemProfile("Pick up Time", " 10:00 ", Icons.password),
-            SizedBox(height: 20),
-            itemProfile("When was the food made", " 8:00", Icons.password),
-            SizedBox(height: 20),*/
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder:(context)=>Maps()
-                ));
-          },
-          child: Text("Accept?"),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.amber),
-            foregroundColor: MaterialStateProperty.all(Colors.black),
-            textStyle: MaterialStateTextStyle.resolveWith((states) {
-              if(states.contains(MaterialState.pressed)) {
-                return TextStyle(fontSize: 20);
-              }
-              return TextStyle(fontSize: 15);
-            }),
-            ),
-           ),
+
+           // SizedBox(height: 20),
+           //  itemProfile('Pick up Location', '', Icons.location_pin),
+           //  SizedBox(height: 20),
+           //  itemProfile("Pick up Instructions", "ABED", Icons.integration_instructions),
+           //  SizedBox(height: 20),
+           //  itemProfile("Food Items", "Biryani", Icons.email),
+           //  SizedBox(height: 20),
+           //  itemProfile("Food Quantity", "5 kg", Icons.location_pin),
+           //  SizedBox(height: 20),
+           //  itemProfile("Pick up Time", " 10:00 ", Icons.password),
+           //  SizedBox(height: 20),
+           //  itemProfile("When was the food made", " 8:00", Icons.password),
+           //  SizedBox(height: 20),
+
 
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance.collection('form').snapshots(),
@@ -70,25 +55,64 @@ class _ReqAcceptedState extends State<ReqAccepted> {
                   {
                     final item = Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(foodItem['pickupAddress']),
-                        Text(foodItem['pickupTime']),
-                        Text(foodItem['instructions']),
-                        Text(foodItem['items']),
-                        Text(foodItem['quantity']),
-                        Text(foodItem['time']),
+                        // Text(foodItem['pickupAddress']),
+                        // Text(foodItem['pickupTime']),
+                        // Text(foodItem['instructions']),
+                        // Text(foodItem['items']),
+                        // Text(foodItem['quantity']),
+                        // Text(foodItem['time']),
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: itemProfile(foodItem['pickupAddress'], '', Icons.location_pin),
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(child: itemProfile(foodItem['pickupTime'], "", Icons.integration_instructions),
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(child: itemProfile(foodItem['instructions'], "", Icons.email),
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(child:itemProfile(foodItem['items'], "", Icons.location_pin)
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(child:  itemProfile(foodItem['quantity'], "", Icons.password)
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(child: itemProfile(foodItem['time'], "", Icons.password)
+                        ),
+                        const SizedBox(height: 20),
                       ],
                     );
                     items.add(item);
                   }
                 }
-                return Expanded(
-                  child: ListView(
-                    children: items,
-                   ),
-                );
+                return ListView(
+                  shrinkWrap: true,
+
+                  children: items,
+                 );
               }
-            )
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder:(context)=>Maps()
+                    ));
+              },
+              child: Text("Accept?"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.amber),
+                foregroundColor: MaterialStateProperty.all(Colors.black),
+                textStyle: MaterialStateTextStyle.resolveWith((states) {
+                  if(states.contains(MaterialState.pressed)) {
+                    return TextStyle(fontSize: 20);
+                  }
+                  return TextStyle(fontSize: 15);
+                }),
+              ),
+            ),
           ],
         ),
       ),

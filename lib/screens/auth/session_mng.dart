@@ -7,6 +7,9 @@ class SessionController {
   factory SessionController(){
     return _session;
   }
+  void clearUserId() {
+    userId = null;
+  }
 
   SessionController._internal();
 }

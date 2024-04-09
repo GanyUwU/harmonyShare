@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../auth/session_mng.dart';
+
 class Info extends StatefulWidget {
   const Info({super.key});
 
@@ -9,6 +11,7 @@ class Info extends StatefulWidget {
 }
 
 class _InfoState extends State<Info> {
+  String? userId = SessionController().userId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

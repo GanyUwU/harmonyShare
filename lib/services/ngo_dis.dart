@@ -19,7 +19,7 @@ class _NgoDisplayState extends State<NgoDisplay> {
     HomeNgo(),
     HistoryNgo(),
     InfoNgo(),
-    ProfileNgo(),
+    UserInformation(),
   ];
 
 

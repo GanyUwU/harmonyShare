@@ -1,4 +1,5 @@
 import 'package:finals/main.dart';
+import 'package:finals/screens/auth/session_mng.dart';
 import 'package:finals/screens/auth/sign_in.dart';
 import 'package:finals/screens/home/home.dart';
 import 'package:finals/services/auth.dart';
@@ -15,13 +16,15 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final ref = FirebaseFirestore.instance.collection('Users').doc(SessionController().userId);
+  String? userId = SessionController().userId;
   bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
-  final TextEditingController _confirmPassword = TextEditingController();
-  final TextEditingController _firstName = TextEditingController();
-  final TextEditingController _phone = TextEditingController();
+  final _email = TextEditingController();
+  final  _password = TextEditingController();
+  final  _confirmPassword = TextEditingController();
+  final  _firstName = TextEditingController();
+  final  _phone = TextEditingController();
   final TextEditingController _address = TextEditingController();
   final TextEditingController _city = TextEditingController();
   final TextEditingController _pin = TextEditingController();
@@ -31,23 +34,26 @@ class _RegisterState extends State<Register> {
     _email.dispose();
     _password.dispose();
     _confirmPassword.dispose();
+    _firstName.dispose();
+    _phone.dispose();
     super.dispose();
   }
 
   Future signUp() async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email : _email.text.trim(),
-      password : _password.text.trim()
-
+      password : _password.text.trim(),
     );
   }
-  void col (){
+  Future<void> col()async {
     CollectionReference collRef = FirebaseFirestore.instance.collection('Users');
     collRef.add({
       'password' : _password.text,
       'email' : _email.text,
       'phone' : _phone.text,
-    });
+      'name' : _firstName.text,
+    }) .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
   }
 
   @override
@@ -83,7 +89,7 @@ class _RegisterState extends State<Register> {
                       fontWeight: FontWeight.bold
                   ),
                 ),
-/*
+
                 TextFormField(
                  validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -106,6 +112,7 @@ class _RegisterState extends State<Register> {
                           BorderRadius.all(Radius.circular(9.0)))
                   ),
                 ),
+                /*
                 TextFormField(
                   controller: _phone,
                   keyboardType: TextInputType.phone,

@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finals/read%20data/get_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+
+import '../auth/session_mng.dart';
 
 
 class Profile extends StatefulWidget {
@@ -14,7 +15,9 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final user = FirebaseAuth.instance.currentUser!;
-
+  final ref = FirebaseFirestore.instance.collection('Users').doc(SessionController().userId);
+  String? userId = SessionController().userId;
+/*
   // Document ID
   List<String> docIDs = [];
 
@@ -27,6 +30,8 @@ class _ProfileState extends State<Profile> {
             }),
     );
   }
+
+*/
 
 
   @override
@@ -43,6 +48,59 @@ class _ProfileState extends State<Profile> {
                 child: Image.asset('assets/profile2.jpg'),
               ),
             ),
+
+          /*
+          StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+           stream: ref.snapshots(),
+           builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+             if (!snapshot.hasData) {
+               return const Center(child: CircularProgressIndicator());
+             } else if (snapshot.hasData) {
+               final userData = snapshot.data!.data();
+               print(userData);
+               return Column(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   // Add this line to align the children to the start of the cross axis
+                   children: [
+                     const SizedBox(
+                       height: 20, // Add this line to add space between the text fields
+                     ),
+                     Text(
+                       "Welcome to Fitsclean ${userData?['email'] ?? ''},",
+
+                       style: const TextStyle(
+                         fontSize: 22.0,
+                         fontFamily: 'Roboto',
+                         fontWeight: FontWeight.bold,
+                         color: Colors.black,
+                         // Set the text color here
+                         fontStyle: FontStyle.italic,
+                       ),
+                       textAlign: TextAlign.left, // Left-align the text
+                     ),
+                     Container(
+                       padding: const EdgeInsets.only(left: 0),
+                       alignment: Alignment.centerLeft,
+                       child: const Text(
+                         "Laundry services near you",
+                         style: TextStyle(
+                           fontSize: 25.0,
+                           fontFamily: 'Roboto',
+                           fontWeight: FontWeight.bold,
+                         ),
+                       ),
+                     ),
+                   ]
+               );
+             }
+             return Text("Done");
+           }
+    ),
+*/
+
+
+/*
           Expanded(
             child: FutureBuilder(
               future: getDocId(),
@@ -62,7 +120,7 @@ class _ProfileState extends State<Profile> {
                 );
               },
             ),
-          ),
+          ),*/
             ElevatedButton(
               onPressed: () { },
               style: ButtonStyle(

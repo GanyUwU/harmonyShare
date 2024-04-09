@@ -1,21 +1,23 @@
 import 'package:finals/main.dart';
 import 'package:finals/screens/auth/option.dart';
 import 'package:finals/screens/auth/register.dart';
+import 'package:finals/screens/auth/register_ngo.dart';
 import 'package:finals/screens/home/home.dart';
 import 'package:finals/services/auth.dart';
+import 'package:finals/services/ngo_dis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
 import 'ForgotPassword.dart';
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class SignInNgo extends StatefulWidget {
+  const SignInNgo({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<SignInNgo> createState() => _SignInNgoState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInNgoState extends State<SignInNgo> {
   bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
@@ -45,7 +47,7 @@ class _SignInState extends State<SignIn> {
       } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content:
-            Text("Wrong password provided for that user.")
+          Text("Wrong password provided for that user.")
           ),
         );
       }
@@ -70,15 +72,15 @@ class _SignInState extends State<SignIn> {
                   overflowSpacing: 20,
                   children: [
                     Image.asset(
-                      alignment: Alignment.center,
+                        alignment: Alignment.center,
                         'assets/donate.png',
-                          height: 200,
-                          width: 300,
+                        height: 200,
+                        width: 300,
                         fit:BoxFit.cover
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "Login to your User account",
+                      "Login to your account",
                       style: TextStyle(
                           fontSize: 20.0,
                           letterSpacing: 2.0,
@@ -137,17 +139,17 @@ class _SignInState extends State<SignIn> {
                         children: [
                           GestureDetector(
                             onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context){
-                              return ForgotPasswordPage();
-                            }));
-                          },
-                              child: Text(
-                                "Forgot Password?",
-                                style: TextStyle(
-                                  color: Colors.amber,
-                                  decoration: TextDecoration.underline,
-                                ),
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return ForgotPasswordPage();
+                              }));
+                            },
+                            child: Text(
+                              "Forgot Password?",
+                              style: TextStyle(
+                                color: Colors.amber,
+                                decoration: TextDecoration.underline,
                               ),
+                            ),
                           ),
                         ],
                       ),
@@ -161,8 +163,8 @@ class _SignInState extends State<SignIn> {
                           if(_formKey.currentState !.validate()){
                             signInWithEmailAndPassword();
                             Navigator.push(
-                            context,
-                                MaterialPageRoute(builder: (context)=>Auth()));
+                                context,
+                                MaterialPageRoute(builder: (context)=>NgoDisplay()));
                           }
                         },
                         style: ButtonStyle(
@@ -188,20 +190,22 @@ class _SignInState extends State<SignIn> {
                       children: <Widget>[
                         Text("Don't have a account?"),
                         TextButton(
-                            onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>Register()
-                                  )
-                              );
-                            },
-                              child: Text(
-                                "Sign Up",
-                                style: TextStyle(
-                                  color: Colors.amber,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            )
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>RegisterNgo()
+                                )
+                            );
+                          },
+
+
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.amber,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ],

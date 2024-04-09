@@ -1,6 +1,7 @@
 import 'package:finals/main.dart';
 import 'package:finals/screens/auth/sign_in.dart';
 import 'package:finals/screens/home/home.dart';
+import 'package:finals/services/signin_op.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class _AuthState extends State<Auth> {
               return MyApp();
             }
             else{
-              return SignIn();
+              return Option_s();
             }
           }
         },

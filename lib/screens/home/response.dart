@@ -1,4 +1,6 @@
 import 'package:finals/screens/home/home.dart';
+import 'package:finals/screens/home/info.dart';
+import 'package:finals/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Response extends StatefulWidget {
@@ -22,7 +24,7 @@ class _ResponseState extends State<Response> {
               TextButton(
                   onPressed: () {
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context)=>HomePage()));
+                MaterialPageRoute(builder: (context)=>Auth()));
               },
                 child: Text('Go back'),
                 style: ButtonStyle(

@@ -1,3 +1,4 @@
+import 'package:finals/screens/Home_Ngo/info_ngo.dart';
 import 'package:finals/screens/home/history.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class DonorDisplay extends StatefulWidget {
 class _DonorDisplayState extends State<DonorDisplay> {
   int _currentIndex = 0;
   final tabs = [
-    HomePage(),
+    InfoNgo(),
     History(),
     Info(),
     Profile()

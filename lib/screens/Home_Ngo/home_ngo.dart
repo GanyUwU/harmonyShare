@@ -107,7 +107,9 @@ class _HomeNgoState extends State<HomeNgo> {
              );
             },
                 icon: Icon(Icons.check),iconSize: 20),
-            IconButton(onPressed: () { }, icon: Icon(Icons.close),iconSize: 20)
+            IconButton(onPressed: () {
+              Navigator.pop(context);
+            }, icon: Icon(Icons.close),iconSize: 20)
           ],
         ),
         tileColor: Colors.white,
