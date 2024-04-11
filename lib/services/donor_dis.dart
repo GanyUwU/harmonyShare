@@ -17,7 +17,7 @@ class _DonorDisplayState extends State<DonorDisplay> {
   int _currentIndex = 0;
   final tabs = [
     InfoNgo(),
-    History(),
+   // History(),
     Info(),
     Profile()
   ];

@@ -17,6 +17,7 @@ class _ProfileState extends State<Profile> {
   final user = FirebaseAuth.instance.currentUser!;
   final ref = FirebaseFirestore.instance.collection('Users').doc(SessionController().userId);
   String? userId = SessionController().userId;
+
 /*
   // Document ID
   List<String> docIDs = [];
@@ -48,6 +49,30 @@ class _ProfileState extends State<Profile> {
                 child: Image.asset('assets/profile2.jpg'),
               ),
             ),
+
+
+            StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance.collection('Users').doc("5VmnbZt0uwkzbhr0UNln").snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final food = snapshot.data;
+                  return ListView(
+                    shrinkWrap: true,
+                    children: [
+                      itemProfile(food?['name']," ",Icons.location_pin),
+                      itemProfile(food?['email'], ' ', Icons.timer),
+                      itemProfile(food?['phone'], " ", Icons.email),
+                      itemProfile(food?['city'], "", Icons.fastfood),
+                      // Add other items here
+                    ],
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              },
+            ),
+
+
 
           /*
           StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(

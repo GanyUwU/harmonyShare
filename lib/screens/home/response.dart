@@ -1,3 +1,4 @@
+import 'package:finals/feedback/feedback_form.dart';
 import 'package:finals/screens/home/home.dart';
 import 'package:finals/screens/home/info.dart';
 import 'package:finals/services/auth.dart';
@@ -24,9 +25,9 @@ class _ResponseState extends State<Response> {
               TextButton(
                   onPressed: () {
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context)=>Auth()));
+                MaterialPageRoute(builder: (context)=>FeedbackForm()));
               },
-                child: Text('Go back'),
+                child: Text('Feedback'),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.amber),
                   foregroundColor: MaterialStateProperty.all(Colors.black),

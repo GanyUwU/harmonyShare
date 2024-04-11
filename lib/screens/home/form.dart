@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finals/screens/home/response.dart';
 import 'package:flutter/material.dart';
 
+
 class FormD extends StatefulWidget {
   const FormD({super.key});
 
@@ -105,6 +106,7 @@ class _FormDState extends State<FormD> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
+
                   CollectionReference collRef = FirebaseFirestore.instance.collection('form');
                   collRef.add({
                     'pickupAddress' : _pickupAddress.text,
@@ -113,6 +115,9 @@ class _FormDState extends State<FormD> {
                     'quantity' : _quantity.text,
                     'pickupTime': _pickupTime.text,
                     'time' : _time.text,
+                    'timestamp' : Timestamp.now(),
+                    // 'latitude': currentLocation!.latitude,
+                    // 'longitude': currentLocation!.longitude,
                   });
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context)=> Response()));

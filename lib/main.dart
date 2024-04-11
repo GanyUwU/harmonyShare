@@ -1,22 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finals/Requests/req_accept.dart';
 import 'package:finals/screens/Home_Ngo/history_ngo.dart';
 import 'package:finals/screens/Home_Ngo/home_ngo.dart';
 import 'package:finals/screens/Home_Ngo/info_ngo.dart';
 import 'package:finals/screens/Home_Ngo/profile_ngo.dart';
-import 'package:finals/screens/auth/register_ngo.dart';
 import 'package:finals/screens/auth/session_mng.dart';
 import 'package:finals/screens/home/history.dart';
 import 'package:finals/screens/home/info.dart';
+import 'package:finals/screens/home/prof.dart';
 import 'package:finals/screens/home/profile.dart';
-import 'package:finals/screens/home/reg.dart';
 import 'package:finals/services/auth.dart';
-import 'package:finals/services/ngo_dis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:finals/screens/home/home.dart';
-import 'package:icon_forest/icon_forest.dart';
+
 // Import the generated file
 import 'firebase_options.dart';
 

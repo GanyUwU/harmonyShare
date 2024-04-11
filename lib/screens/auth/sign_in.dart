@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finals/main.dart';
 import 'package:finals/screens/auth/option.dart';
 import 'package:finals/screens/auth/register.dart';
@@ -38,16 +39,24 @@ class _SignInState extends State<SignIn> {
         isLoading = false;
       });
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("No user found"),
-        )
-        );
+          return showDialog(
+            context: context,
+            builder: (context){
+              return AlertDialog(
+                content: Text('No existing user found'),
+              );
+            },
+          );
+
       } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content:
             Text("Wrong password provided for that user.")
           ),
         );
+      }
+      else{
+        return ("correctly signed in");
       }
     }
   }
@@ -91,6 +100,9 @@ class _SignInState extends State<SignIn> {
                       validator: (text){
                         if(text == null || text.isEmpty){
                           return 'Email is empty';
+                        }
+                        if (!text.endsWith("@gmail.com")) {
+                          return("Email address is not valid!");
                         }
                         return null;
                       },
@@ -189,6 +201,7 @@ class _SignInState extends State<SignIn> {
                         Text("Don't have a account?"),
                         TextButton(
                             onPressed: () {
+
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context)=>Register()
                                   )
@@ -214,5 +227,3 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
-
-

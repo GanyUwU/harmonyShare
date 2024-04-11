@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class Register extends StatefulWidget {
   const Register({super.key});
 
@@ -40,21 +39,33 @@ class _RegisterState extends State<Register> {
   }
 
   Future signUp() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email : _email.text.trim(),
-      password : _password.text.trim(),
-    );
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+        email: _email.text.trim(),
+        password: _password.text.trim(),
+      );
+      User? user = userCredential.user;
+      String? uid = user?.uid;
+      String uidStr = uid ?? "";
+    }
+    catch (e) {
+      print(e);
+    }
   }
-  Future<void> col()async {
-    CollectionReference collRef = FirebaseFirestore.instance.collection('Users');
-    collRef.add({
-      'password' : _password.text,
-      'email' : _email.text,
-      'phone' : _phone.text,
-      'name' : _firstName.text,
-    }) .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
-  }
+    Future<void> col() async {
+      CollectionReference collRef = FirebaseFirestore.instance.collection(
+          'Users');
+      DocumentReference doc = FirebaseFirestore.instance.collection("Users").doc();
+      collRef.add({
+        'password': _password.text,
+        'email': _email.text,
+        'phone': _phone.text,
+        'name': _firstName.text,
+        'userId': userId,
+      }).then((DocumentReference doc) => print(doc.id))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
 
   @override
   Widget build(BuildContext context) {
