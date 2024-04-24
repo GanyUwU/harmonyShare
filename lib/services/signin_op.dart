@@ -16,51 +16,70 @@ class _Option_sState extends State<Option_s> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(onPressed: ()
-              {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>SignIn())
-                );
-              },
-                child: Text('User Sign in'),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.amber),
-                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                  textStyle: MaterialStateTextStyle.resolveWith((states) {
-                    if(states.contains(MaterialState.pressed)) {
-                      return TextStyle(fontSize: 20);
-                    }
-                    return TextStyle(fontSize: 15);
-                  }),
+      appBar: AppBar(
+        title: Text("HarmonyShare"),
+        centerTitle: true,
+        backgroundColor: Colors.amber,
+      ),
+        body: Center(
+          child: SingleChildScrollView(
+              // child: Padding(
+              //   padding: EdgeInsets.all(20.0) ,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                        alignment: Alignment.center,
+                        'assets/donate.png',
+                       // height: 200,
+                       //width: 300,
+                        fit:BoxFit.cover
+                    ),
+                    SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: ()
+                    {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>SignIn())
+                      );
+                    },
+                      child: Text('User Sign in'),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.amber),
+                        foregroundColor: MaterialStateProperty.all(Colors.black),
+                        textStyle: MaterialStateTextStyle.resolveWith((states) {
+                          if(states.contains(MaterialState.pressed)) {
+                            return TextStyle(fontSize: 20);
+                          }
+                          return TextStyle(fontSize: 15);
+                        }),
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    ElevatedButton(onPressed: ()
+                    {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>SignInNgo())
+                      );
+                    },
+                      child: Text('NGO sign in'),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.amber),
+                        foregroundColor: MaterialStateProperty.all(Colors.black),
+                        textStyle: MaterialStateTextStyle.resolveWith((states) {
+                          if(states.contains(MaterialState.pressed)) {
+                            return TextStyle(fontSize: 20);
+                          }
+                          return TextStyle(fontSize: 15);
+                        }),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              ElevatedButton(onPressed: ()
-              {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>SignInNgo())
-                );
-              },
-                child: Text('NGO sign in'),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.amber),
-                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                  textStyle: MaterialStateTextStyle.resolveWith((states) {
-                    if(states.contains(MaterialState.pressed)) {
-                      return TextStyle(fontSize: 20);
-                    }
-                    return TextStyle(fontSize: 15);
-                  }),
-                ),
-              )
-            ],
-          ),
-        )
+            ),
+       // ),
     );
   }
 }

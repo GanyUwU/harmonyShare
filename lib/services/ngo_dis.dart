@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../screens/Home_Ngo/history_ngo.dart';
 import '../screens/Home_Ngo/home_ngo.dart';
 import '../screens/Home_Ngo/info_ngo.dart';
+import '../screens/Home_Ngo/profileTrial.dart';
 import '../screens/Home_Ngo/profile_ngo.dart';
 
 class NgoDisplay extends StatefulWidget {
@@ -19,7 +20,9 @@ class _NgoDisplayState extends State<NgoDisplay> {
     HomeNgo(),
     HistoryNgo(),
     InfoNgo(),
-    UserInformation(),
+    //UserInformation(),
+    //userprofile()
+    ProfilePageNg()
   ];
 
 

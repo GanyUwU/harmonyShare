@@ -6,6 +6,8 @@ import 'package:finals/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:icon_forest/bytesize.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -15,6 +17,28 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+
+  Future<Position> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
+
+
   final ref = FirebaseFirestore.instance.collection('Users').doc(SessionController().userId);
   String? userId = SessionController().userId;
   bool isLoading = false;
@@ -48,14 +72,32 @@ class _RegisterState extends State<Register> {
       User? user = userCredential.user;
       String? uid = user?.uid;
       String uidStr = uid ?? "";
+      Position position = await _getCurrentLocation();
+      CollectionReference collRef = FirebaseFirestore.instance.collection('Users');
+      DocumentReference doc = FirebaseFirestore.instance.collection("Users").doc(user?.uid);
+      collRef.doc(uidStr).set({
+        'password': _password.text,
+        'email': _email.text,
+        'phone': _phone.text,
+        'name': _firstName.text,
+        'city': _city.text,
+        'userId': uidStr,
+        'location': {
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+        },
+      });
+          // .then((DocumentReference doc) => print(doc.id))
+          // .catchError((error) => print("Failed to add user: $error"));
     }
     catch (e) {
       print(e);
     }
   }
-    Future<void> col() async {
-      CollectionReference collRef = FirebaseFirestore.instance.collection(
-          'Users');
+    /*Future<void> col() async {
+
+      Position position = await _getCurrentLocation();
+      CollectionReference collRef = FirebaseFirestore.instance.collection('Users');
       DocumentReference doc = FirebaseFirestore.instance.collection("Users").doc();
       collRef.add({
         'password': _password.text,
@@ -63,10 +105,14 @@ class _RegisterState extends State<Register> {
         'phone': _phone.text,
         'name': _firstName.text,
         'userId': userId,
+        'location': {
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+        },
       }).then((DocumentReference doc) => print(doc.id))
           .catchError((error) => print("Failed to add user: $error"));
     }
-
+*/
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -79,7 +125,7 @@ class _RegisterState extends State<Register> {
        child : Center(
         child: SingleChildScrollView(
          child: Padding(
-           padding: EdgeInsets.all(20.0),
+           padding: EdgeInsets.only(left: 20.0, right: 20.0,top:0.0),
           child: Form(
             key: _formKey,
             child: OverflowBar(
@@ -123,10 +169,17 @@ class _RegisterState extends State<Register> {
                           BorderRadius.all(Radius.circular(9.0)))
                   ),
                 ),
-                /*
+
                 TextFormField(
                   controller: _phone,
                   keyboardType: TextInputType.phone,
+                  validator: (value)
+                  {
+                    if(value!.isEmpty){
+                      return 'more than 10';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: "Enter your phone no",
                     labelText: "Phone no",
@@ -135,7 +188,7 @@ class _RegisterState extends State<Register> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                ),*/
+                ),
                 // SizedBox(height: 20),
                 TextFormField(
                   controller: _email,
@@ -170,8 +223,8 @@ class _RegisterState extends State<Register> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                ),
-                // SizedBox(height: 20),
+                ),*/
+                 //SizedBox(height: 20),
                 TextFormField(
                   controller: _city,
                   decoration: InputDecoration(
@@ -182,7 +235,7 @@ class _RegisterState extends State<Register> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                ),*/
+                ),
                 // SizedBox(height: 20),
                 TextFormField(
                   obscureText: true,
@@ -238,7 +291,7 @@ class _RegisterState extends State<Register> {
                   child:ElevatedButton(
                     onPressed: (){
                       signUp();
-                      col();
+                      //col();
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context)=> MyApp()));
                     },

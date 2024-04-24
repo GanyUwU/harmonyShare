@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HistoryNgo extends StatelessWidget {
@@ -30,7 +32,7 @@ class HistoryNgo extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 5),
-              historys("Food item", "Food description"),
+              historys("Bhindi", "5.0 KG"),
               SizedBox(height: 20),
               historys("Food item", "Food description"),
               SizedBox(height: 40),
@@ -47,6 +49,7 @@ class HistoryNgo extends StatelessWidget {
                       )
                   )
               ),
+              /*
               SizedBox(height: 20),
               messages("Donor Name", "Donar Description"),
               SizedBox(height: 20),
@@ -55,6 +58,8 @@ class HistoryNgo extends StatelessWidget {
               messages("Donor Name", "Donar Description"),
               SizedBox(height: 20),
               // messages("Donor Name", "Donar Description"),
+               */
+              history()
             ],
           ),
         ),
@@ -122,4 +127,98 @@ class HistoryNgo extends StatelessWidget {
       ),
     );
   }
+}
+
+String userId = FirebaseAuth.instance.currentUser!.uid;
+Widget history() {
+  return StreamBuilder<QuerySnapshot>(
+
+    stream: FirebaseFirestore.instance
+        .collection("form").where('status', isEqualTo: 'accepted').
+    snapshots(),
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot?> snapshot) {
+      if (!snapshot.hasData) {
+        return const CircularProgressIndicator();
+      }
+
+      return SizedBox(
+        height: 350,
+        child: ListView.builder(
+          itemCount: snapshot.data!.docs.length,
+          itemBuilder: (context, index) {
+            DocumentSnapshot document = snapshot.data!.docs[index];
+            Map<dynamic, dynamic> data = document.data()! as Map<dynamic, dynamic>;
+            return Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              child: Card(
+                clipBehavior: Clip.hardEdge,
+                child: InkWell(
+                  splashColor: Colors.redAccent.withAlpha(30),
+                  onTap: () {
+                    debugPrint('Card tapped.');
+                  },
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 100,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    children: [
+                                      const TextSpan(text: 'item:\n'),
+                                      TextSpan(text: data['items'] ?? 'N/A')
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    children: [
+                                      const TextSpan(text: 'Quantity: Kg\n '),
+                                      TextSpan(text: data['quantity'] ?? 'N/A')
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    },
+  );
 }

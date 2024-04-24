@@ -132,6 +132,7 @@
 // }
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class History extends StatefulWidget {
@@ -142,11 +143,16 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  // final User? user = auth.currentUser;
+  // final String? userId = user?.uid;
+  String userId = FirebaseAuth.instance.currentUser!.uid;
   Widget allOrderDetails() {
     return StreamBuilder<QuerySnapshot>(
+
       stream: FirebaseFirestore.instance
-          .collection("form")
-          .snapshots(),
+          .collection("form").where('userId', isEqualTo: userId).
+          snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot?> snapshot) {
         if (!snapshot.hasData) {
           return const CircularProgressIndicator();
@@ -281,29 +287,27 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Flexible(
-        fit: FlexFit.tight,
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(left: 8),
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start, // Add this line to align the children to the start of the cross axis
-                    children: [
-                      allOrderDetails(),
-                    ],
-                  ),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.only(left: 8),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start, // Add this line to align the children to the start of the cross axis
+                  children: [
+                    allOrderDetails(),
+                  ],
                 ),
               ),
             ),
+          ),
 
 
-          ],
-        ),
+        ],
       ),
     );
   }
