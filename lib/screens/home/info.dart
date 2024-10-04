@@ -101,7 +101,7 @@ class _InfoState extends State<Info> {
                               ],
                             ),
                           ),
-
+Text("hello");
                           Expanded(
                             flex: 1,
                             child: Column(
